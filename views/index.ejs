@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="icon" href="http://getbootstrap.com/favicon.ico"> -->
+
+    <style type="text/css">
+        :root #content > #right > .dose > .dosesingle,
+        :root #content > #center > .dose > .dosesingle {
+            display: none !important;
+        }</style>
+
+    <title><%- title %></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Custom styles for this template -->
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+
+    <!-- HTTPS required. HTTP will give a 403 forbidden response -->
+    <script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
+    <script type="text/javascript">
+        var decodeViewData = function(x) {
+            return x.replace(/&#(\d+);/g, function(match, dec) {
+                return String.fromCharCode(dec);
+            });
+        };
+
+        var viewData = decodeViewData('<%= viewData %>');
+        // console.log(viewData);
+
+        var view = JSON.parse(viewData);
+        // console.log(view);
+
+        // initialize Account Kit with CSRF protection
+        AccountKit_OnInteractive = function () {
+            AccountKit.init(
+                {
+                    appId: view.appId,
+                    state: view.csrf,
+                    version: view.version,
+                    fbAppEventsEnabled: true,
+                    debug: true
+                }
+            );
+        };
+
+        // login callback
+        function loginCallback(response) {
+            if (response.status === "PARTIALLY_AUTHENTICATED") {
+                document.getElementById("code").value = response.code;
+                document.getElementById("csrf").value = response.state;
+                document.getElementById("login_success").submit();
+            }
+            else if (response.status === "NOT_AUTHENTICATED") {
+                // handle authentication failure
+            }
+            else if (response.status === "BAD_PARAMS") {
+                // handle bad parameters
+            }
+        }
+
+        // phone form submission handler
+        function smsLogin() {
+            var countryCode = '+1';
+            var phoneNumber = document.getElementById("phone_number").value;
+            AccountKit.login(
+                'PHONE',
+                {countryCode: countryCode, phoneNumber: phoneNumber}, // will use default values if not specified
+                loginCallback
+            );
+        }
+
+        // email form submission handler
+//        function emailLogin() {
+//            var emailAddress = document.getElementById("email").value;
+//            AccountKit.login(
+//                'EMAIL',
+//                {emailAddress: emailAddress},
+//                loginCallback
+//            );
+//        }
+    </script>
+</head>
+<body>
+<!-- Container begin -->
+<div class="container">
+
+    <main role="main">
+
+        <div style="padding: 10px 200px; background-color: #fff; text-align: center">
+            <img src="/images/essp-pink-logo.png" width="200">
+
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+            <p>
+            <h4 style="color:#ac2189;">Enter your mobile phone</h4>
+            </p>
+
+            <img src="/images/phone-upsell.png" width="300">
+
+            <br/>
+            <br/>
+            <br/>
+
+            <p>
+                <input type="text" placeholder="Phone Number" class="form-control" id="phone_number">
+            </p>
+            <p style="font-size: 0.8rem"><input type="checkbox"> &nbsp; By clicking continue you agree to receive text
+                from SaverLife. Standard SMS rates may apply.</p>
+            <p>
+                <a class="btn btn-md" style="background-color: #6f6f6f; border-color: #6f6f6f; color: #ffffff" href="#" role="button">Skip Now</a> &nbsp;&nbsp;
+                <!-- <a class="btn btn-md" style="background-color: #ac2189; border-color: #ac2189; color: #ffffff" href="http://getbootstrap.com/docs/4.0/examples/narrow-jumbotron/#" role="button">Continue</a> -->
+                <button class="btn btn-md" style="background-color: #ac2189; border-color: #ac2189; color: #ffffff" id="smsLogin" onclick="smsLogin();">Continue</button>
+            </p>
+
+            <br/>
+            <br/>
+
+            <footer class="footer" style="text-align: left; font-weight: bold;">
+                <p>
+                    <span> © EARN 2017 </span>
+                    <span style="float: right;"> Privacy Policy &nbsp;&nbsp; Legal &nbsp;&nbsp; Contact</span>
+                </p>
+            </footer>
+        </div>
+        <div id="content">
+            <form id="login_success" method="post" action="/fbLoginSuccess">
+                <input id="csrf" type="hidden" name="csrf"/>
+                <input id="code" type="hidden" name="code"/>
+            </form>
+        </div>
+    </main>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+</div>
+<!-- /container -->
+</body>
+</html>

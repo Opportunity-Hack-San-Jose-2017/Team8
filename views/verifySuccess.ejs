@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="icon" href="http://getbootstrap.com/favicon.ico"> -->
+
+    <style type="text/css">
+        :root #content > #right > .dose > .dosesingle,
+        :root #content > #center > .dose > .dosesingle {
+            display: none !important;
+        }</style>
+
+    <title><%- title %></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Custom styles for this template -->
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+
+    <script type="text/javascript">
+        var decodeViewData = function(x) {
+            return x.replace(/&#(\d+);/g, function(match, dec) {
+                return String.fromCharCode(dec);
+            });
+        };
+
+        var viewData = decodeViewData('<%= viewData %>');
+        // console.log(viewData);
+
+        var view = JSON.parse(viewData);
+        console.log(view);
+
+    </script>
+
+</head>
+<body>
+<!-- Container begin -->
+<div class="container">
+
+    <main role="main">
+
+        <div style="padding: 10px 200px; background-color: #fff; text-align: center">
+            <img src="/images/essp-pink-logo.png" width="200">
+
+            <br/>
+            <br/>
+            <br/>
+
+
+            <p>
+                <h4 style="color:#ac2189;">Mobile Phone Verified</h4>
+            </p>
+
+            <img src="/images/phone-verified.png" width="100">
+            <br/>
+            <br/>
+
+            <p>
+                <a class="btn btn-md" style="background-color: #ac2189; border-color: #ac2189; color: #ffffff" href="#" role="button">Continue</a>
+            </p>
+
+            <br/>
+            <br/>
+
+            <footer class="footer" style="text-align: left; font-weight: bold;">
+                <p>
+                    <span> © EARN 2017 </span>
+                    <span style="float: right;"> Privacy Policy &nbsp;&nbsp; Legal &nbsp;&nbsp; Contact</span>
+                </p>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+</div>
+<!-- /container -->
+</body>
+</html>
