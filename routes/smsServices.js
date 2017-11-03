@@ -28,6 +28,7 @@ router.get('/', function(req, res, next) {
 * */
 router.post('/sendText', function(req, res, next) {
 
+    console.log("Inside Text Message");
     console.log(req.body);
     var phoneNumber = req.body.phoneNumber;
     var textBody= req.body.textBody;

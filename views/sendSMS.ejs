@@ -2,6 +2,17 @@
 <html>
 <head>
     <title><%= title %></title>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -60,20 +71,16 @@
             <br/>
             <br/>
             <br/>
-
+            <form>
             <p>
-                <input type="text" placeholder="Phone Number" class="form-control" id="phone">
+                <input type="text" placeholder="Phone Number" class="form-control" id="phoneNumber">
             </p>
             <p>
-                <input type="text" placeholder="Notification" class="form-control" id="message">
+                <input type="text" placeholder="Notification" class="form-control" id="textBody">
             </p>
-            <p>
-            <form method="post" action="/sms/sendText">
                 <!-- <a class="btn btn-md" style="background-color: #ac2189; border-color: #ac2189; color: #ffffff" href="http://getbootstrap.com/docs/4.0/examples/narrow-jumbotron/#" role="button">Continue</a> -->
-                <button class="btn btn-md" style="padding: 8px 120px; background-color: #ac2189; border-color: #ac2189; color: #ffffff" id="sendSms">Send</button>
-                <input id="csrf" type="hidden" name="csrf"/>
+                <input type="button" class="btn btn-md" style="padding: 8px 120px; background-color: #ac2189; border-color: #ac2189; color: #ffffff" id="sendSms" value="Send"></input>
             </form>
-            </p>
 
             <br/>
             <br/>
@@ -85,35 +92,31 @@
                 </p>
             </footer>
         </div>
+
+
         <script>
             $('#sendSms').click(function(e) {
+                alert('Im here');
                 e.preventDefault();
                 $.ajax({
                     url: "/sms/sendText",
-                    contentType: "application/json",
                     data: {
-                        phoneNumber:  $("phone").value,
-                        textBody:  $("message").value
+                        phoneNumber:  $("phoneNumber").val(),
+                        textBody:  $("textBody").val()
                     },
                     type: "POST",
-                        success: function(responseData) {
+                    success: function(responseData) {
                     },
-                    error: console.error
+                    error: function(error) {
+                        console.log(error);
+                    }
                 });
             });
         </script>
     </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-            crossorigin="anonymous"></script>
+
 </div>
 <!-- /container -->
 </body>

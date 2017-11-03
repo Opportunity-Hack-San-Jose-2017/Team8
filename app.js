@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
+var formidable = require('express-formidable');
 require('dotenv').config();
 
 var index = require('./routes/index');
@@ -18,6 +19,7 @@ var app = express();
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+//app.use(formidable());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
