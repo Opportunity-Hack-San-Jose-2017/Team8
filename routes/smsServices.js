@@ -32,8 +32,8 @@ router.post('/sendText', function(req, res, next) {
     console.log(req.body);
     var phoneNumber = req.body.phoneNumber;
     var textBody= req.body.textBody;
-    console.log('phoneNumber' + phoneNumber);
-    console.log('textBody' + textBody);
+    console.log('phoneNumber  ' + phoneNumber);
+    console.log('textBody  ' + textBody);
 
     client.messages
         .create({

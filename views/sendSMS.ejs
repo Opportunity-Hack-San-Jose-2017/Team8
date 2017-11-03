@@ -96,14 +96,16 @@
 
         <script>
             $('#sendSms').click(function(e) {
-                alert('Im here');
+                var phoneNumber =  $("#phoneNumber").val();
+                var textBody =  $("#textBody").val();
                 e.preventDefault();
                 $.ajax({
                     url: "/sms/sendText",
                     data: {
-                        phoneNumber:  $("phoneNumber").val(),
-                        textBody:  $("textBody").val()
+                        phoneNumber: phoneNumber,
+                        textBody: textBody
                     },
+                    dataType: 'json',
                     type: "POST",
                     success: function(responseData) {
                     },
