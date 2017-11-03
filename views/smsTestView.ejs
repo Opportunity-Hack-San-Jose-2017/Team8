@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
+    <title>Test View for SMS</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -14,7 +14,7 @@
             display: none !important;
         }</style>
 
-    <title><%- title %></title>
+    <title>Test View for SMS</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
@@ -23,22 +23,6 @@
 
     <!-- Custom styles for this template -->
     <link rel='stylesheet' href='/stylesheets/style.css'/>
-
-    <script type="text/javascript">
-        var decodeViewData = function(x) {
-            return x.replace(/&#(\d+);/g, function(match, dec) {
-                return String.fromCharCode(dec);
-            });
-        };
-
-        var viewData = decodeViewData('<%= viewData %>');
-        // console.log(viewData);
-
-        var view = JSON.parse(viewData);
-        console.log(view);
-
-    </script>
-
 </head>
 <body>
 <!-- Container begin -->
@@ -52,20 +36,25 @@
             <br/>
             <br/>
             <br/>
-
-
-            <p>
-            <h4 style="color:#ac2189;">Message Sent</h4>
-            </p>
-
-            <img src="/images/phone-verified.png" width="100">
-            <br/>
             <br/>
 
             <p>
-                <a class="btn btn-md" style="background-color: #ac2189; border-color: #ac2189; color: #ffffff" href="#" role="button">Continue</a>
+            <h4 style="color:#ac2189;">Enter your mobile phone</h4>
             </p>
 
+            <img src="/images/phone-upsell.png" width="300">
+
+            <br/>
+            <br/>
+            <br/>
+
+            <p>
+                <input placeholder="Phone Number" class="form-control" id="phone_number"><%= phoneNumber %>
+            </p>
+            <p>
+                <!-- <a class="btn btn-md" style="background-color: #ac2189; border-color: #ac2189; color: #ffffff" href="http://getbootstrap.com/docs/4.0/examples/narrow-jumbotron/#" role="button">Continue</a> -->
+                <input placeholder="Text Template" class="form-control" id="Test_Template"><%= textBody %>
+            </p>
             <br/>
             <br/>
 

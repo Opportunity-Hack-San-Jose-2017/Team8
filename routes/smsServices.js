@@ -16,10 +16,8 @@ router.get('/', function(req, res, next) {
     var viewData = {
         accountSid: accountSid,
         authToken: authToken,
-        twilioPhoneNumber: twilioPhoneNumber,
-        client: client
+        twilioPhoneNumber: twilioPhoneNumber
     };
-
     res.render('sendSMS', { title: 'SaverLife Savings', viewData: JSON.stringify(viewData)});
 });
 
@@ -33,6 +31,8 @@ router.post('/sendText', function(req, res, next) {
     console.log(req.body);
     var phoneNumber = req.body.phoneNumber;
     var textBody= req.body.textBody;
+    console.log('phoneNumber' + phoneNumber);
+    console.log('textBody' + textBody);
 
     client.messages
         .create({
@@ -43,7 +43,6 @@ router.post('/sendText', function(req, res, next) {
         .then(function (message) {
             return console.log(message.sid);
         });
-
     res.render('smsTestView', { phoneNumber: phoneNumber, textBody: textBody });
 });
 module.exports = router;

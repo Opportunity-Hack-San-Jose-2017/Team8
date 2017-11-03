@@ -33,19 +33,11 @@
         };
 
         var viewData = decodeViewData('<%= viewData %>');
-        console.log(viewData);
+        // console.log(viewData);
 
         var view = JSON.parse(viewData);
-        console.log(view);
-        document.getElementById("accountSid").value = view.accountSid;
-        document.getElementById("authToken").value = view.authToken;
-        document.getElementById("twilioPhoneNumber").value = view.twilioPhoneNumber;
-        document.getElementById("client").value = view.client;
+        // console.log(view);
 
-        // email form submission handler
-        function sendSMS() {
-            document.getElementById("send_sms").submit();
-        }
     </script>
 </head>
 <body>
@@ -63,7 +55,7 @@
             <br/>
 
             <p>
-            <h4 style="color:#ac2189;">Send Notification Message</h4>
+            <h4 style="color:#ac2189;">Admin Screen to Send Notification Messages</h4>
             </p>
             <br/>
             <br/>
@@ -76,8 +68,11 @@
                 <input type="text" placeholder="Notification" class="form-control" id="message">
             </p>
             <p>
+            <form method="post" action="/sms/sendText">
                 <!-- <a class="btn btn-md" style="background-color: #ac2189; border-color: #ac2189; color: #ffffff" href="http://getbootstrap.com/docs/4.0/examples/narrow-jumbotron/#" role="button">Continue</a> -->
-                <button class="btn btn-md" style="padding: 8px 120px; background-color: #ac2189; border-color: #ac2189; color: #ffffff" id="sendSMS" onclick="sendSMS();">Continue</button>
+                <button class="btn btn-md" style="padding: 8px 120px; background-color: #ac2189; border-color: #ac2189; color: #ffffff" id="sendSms">Send</button>
+                <input id="csrf" type="hidden" name="csrf"/>
+            </form>
             </p>
 
             <br/>
@@ -90,16 +85,23 @@
                 </p>
             </footer>
         </div>
-        <div id="content">
-            <form id="send_sms" method="post" action="/sms/sendText">
-                <input id="phone" type="text" name="phone"/>
-                <input id="message" type="text" name="message"/>
-                <input id="accountSid" type="hidden" name="accountSid"/>,
-                <input id="authToken" type="hidden" name="authToken"/>,
-                <input id="twilioPhoneNumber" type="hidden" name="twilioPhoneNumber"/>,
-                <input id="client" type="hidden" name="client"/>
-            </form>
-        </div>
+        <script>
+            $('#sendSms').click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "/sms/sendText",
+                    contentType: "application/json",
+                    data: {
+                        phoneNumber:  $("phone").value,
+                        textBody:  $("message").value
+                    },
+                    type: "POST",
+                        success: function(responseData) {
+                    },
+                    error: console.error
+                });
+            });
+        </script>
     </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
