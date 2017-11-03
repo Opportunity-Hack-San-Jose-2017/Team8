@@ -1,3 +1,4 @@
+var path = require('path');
 var express = require('express');
 var router = express.Router();
 
@@ -7,12 +8,20 @@ var accountSid = process.env.TWILIO_ACCOUNT_SID;
 var authToken = process.env.TWILIO_AUTH_TOKEN;
 var twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 
-// console.log(accountSid);
-// console.log(authToken);
-// console.log(twilioPhoneNumber);
-
 // require the Twilio module and create a REST client
 var client = require('twilio')(accountSid, authToken);
+
+/* GET email verify page */
+router.get('/', function(req, res, next) {
+    var viewData = {
+        accountSid: accountSid,
+        authToken: authToken,
+        twilioPhoneNumber: twilioPhoneNumber,
+        client: client
+    };
+
+    res.render('sendSMS', { title: 'SaverLife Savings', viewData: JSON.stringify(viewData)});
+});
 
 
 /* POST api for sending Text to user.
@@ -29,7 +38,7 @@ router.post('/sendText', function(req, res, next) {
         .create({
             to: '+1' + phoneNumber,
             from: '+1' + twilioPhoneNumber,
-            body: textBody,
+            body: textBody
         })
         .then(function (message) {
             return console.log(message.sid);
@@ -37,7 +46,6 @@ router.post('/sendText', function(req, res, next) {
 
     res.render('smsTestView', { phoneNumber: phoneNumber, textBody: textBody });
 });
-
 module.exports = router;
 
 

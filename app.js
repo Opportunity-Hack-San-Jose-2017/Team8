@@ -8,9 +8,10 @@ var http = require('http');
 require('dotenv').config();
 
 var index = require('./routes/index');
+var emailValidation = require('./routes/emailValidation');
 var users = require('./routes/users');
 var smsServices = require('./routes/smsServices');
-// var fbServices = require('./routes/fbServices');
+
 
 var app = express();
 
@@ -35,8 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/', smsServices);
-// app.use('/', fbServices);
+app.use('/sms', smsServices);
+app.use('/email', emailValidation);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

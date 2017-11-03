@@ -24,6 +24,7 @@
     <!-- Custom styles for this template -->
     <link rel='stylesheet' href='/stylesheets/style.css'/>
 
+    <!-- HTTPS required. HTTP will give a 403 forbidden response -->
     <script type="text/javascript">
         var decodeViewData = function(x) {
             return x.replace(/&#(\d+);/g, function(match, dec) {
@@ -32,13 +33,20 @@
         };
 
         var viewData = decodeViewData('<%= viewData %>');
-        // console.log(viewData);
+        console.log(viewData);
 
         var view = JSON.parse(viewData);
         console.log(view);
+        document.getElementById("accountSid").value = view.accountSid;
+        document.getElementById("authToken").value = view.authToken;
+        document.getElementById("twilioPhoneNumber").value = view.twilioPhoneNumber;
+        document.getElementById("client").value = view.client;
 
+        // email form submission handler
+        function sendSMS() {
+            document.getElementById("send_sms").submit();
+        }
     </script>
-
 </head>
 <body>
 <!-- Container begin -->
@@ -52,18 +60,24 @@
             <br/>
             <br/>
             <br/>
-
+            <br/>
 
             <p>
-            <h4 style="color:#ac2189;">Message Sent</h4>
+            <h4 style="color:#ac2189;">Send Notification Message</h4>
             </p>
-
-            <img src="/images/phone-verified.png" width="100">
+            <br/>
             <br/>
             <br/>
 
             <p>
-                <a class="btn btn-md" style="background-color: #ac2189; border-color: #ac2189; color: #ffffff" href="#" role="button">Continue</a>
+                <input type="text" placeholder="Phone Number" class="form-control" id="phone">
+            </p>
+            <p>
+                <input type="text" placeholder="Notification" class="form-control" id="message">
+            </p>
+            <p>
+                <!-- <a class="btn btn-md" style="background-color: #ac2189; border-color: #ac2189; color: #ffffff" href="http://getbootstrap.com/docs/4.0/examples/narrow-jumbotron/#" role="button">Continue</a> -->
+                <button class="btn btn-md" style="padding: 8px 120px; background-color: #ac2189; border-color: #ac2189; color: #ffffff" id="sendSMS" onclick="sendSMS();">Continue</button>
             </p>
 
             <br/>
@@ -76,8 +90,17 @@
                 </p>
             </footer>
         </div>
+        <div id="content">
+            <form id="send_sms" method="post" action="/sms/sendText">
+                <input id="phone" type="text" name="phone"/>
+                <input id="message" type="text" name="message"/>
+                <input id="accountSid" type="hidden" name="accountSid"/>,
+                <input id="authToken" type="hidden" name="authToken"/>,
+                <input id="twilioPhoneNumber" type="hidden" name="twilioPhoneNumber"/>,
+                <input id="client" type="hidden" name="client"/>
+            </form>
+        </div>
     </main>
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
